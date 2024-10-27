@@ -147,17 +147,11 @@ os.makedirs('/tmp/data', exist_ok=True)
 
 from urllib.request import urlretrieve
 urls = [
-    'https://s2.q4cdn.com/299287126/files/doc_financials/2023/ar/2022-Shareholder-Letter.pdf',
-    'https://s2.q4cdn.com/299287126/files/doc_financials/2022/ar/2021-Shareholder-Letter.pdf',
-    'https://s2.q4cdn.com/299287126/files/doc_financials/2021/ar/Amazon-2020-Shareholder-Letter-and-1997-Shareholder-Letter.pdf',
-    'https://s2.q4cdn.com/299287126/files/doc_financials/2020/ar/2019-Shareholder-Letter.pdf'
+    'https://ws-assets-prod-iad-r-pdx-f3b3f9f1a7d6a3d0.s3.us-west-2.amazonaws.com/c81935bc-0b43-4bd6-bd01-db45f847d6bd/assets/Statistics-WEB.pdf'
 ]
 
 filenames = [
-    'AMZN-2022-Shareholder-Letter.pdf',
-    'AMZN-2021-Shareholder-Letter.pdf',
-    'AMZN-2020-Shareholder-Letter.pdf',
-    'AMZN-2019-Shareholder-Letter.pdf'
+    'Statistics-WEB.pdf'
 ]
 
 data_root = "/tmp/data/"
