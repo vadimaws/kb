@@ -9,6 +9,7 @@ if [[ "$STACK_OPERATION" == "create" || "$STACK_OPERATION" == "update" ]]; then
     python3 create_kb.py
 elif [ "$STACK_OPERATION" == "delete" ]; then
     # delete workshop resources
+    ls
 else
     echo "Invalid stack operation!"
     exit 1
