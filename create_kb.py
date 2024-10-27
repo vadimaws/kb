@@ -252,30 +252,6 @@ create_ds_response = bedrock_agent_client.create_data_source(
 ds = create_ds_response["dataSource"]
 pp.pprint(ds)
 
-# Get DataSource 
-bedrock_agent_client.get_data_source(knowledgeBaseId = kb['knowledgeBaseId'], dataSourceId = ds["dataSourceId"])
-
-# Start an ingestion job
-time.sleep(30)
-start_job_response = bedrock_agent_client.start_ingestion_job(knowledgeBaseId = kb['knowledgeBaseId'], dataSourceId = ds["dataSourceId"])
-
-job = start_job_response["ingestionJob"]
-pp.pprint(job)
-
-# Get job 
-while(job['status']!='COMPLETE' ):
-    get_job_response = bedrock_agent_client.get_ingestion_job(
-      knowledgeBaseId = kb['knowledgeBaseId'],
-        dataSourceId = ds["dataSourceId"],
-        ingestionJobId = job["ingestionJobId"]
-  )
-    job = get_job_response["ingestionJob"]
-    
-    time.sleep(30)
-
-pp.pprint(job)
-
-
 # Print the knowledge base Id in bedrock, that corresponds to the Opensearch index in the collection we created before, we will use it for the invocation later
 kb_id = kb["knowledgeBaseId"]
 pp.pprint(kb_id)
