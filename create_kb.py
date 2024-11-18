@@ -4,10 +4,11 @@ import boto3
 from botocore.exceptions import ClientError
 import pprint
 from utility import create_bedrock_execution_role, create_oss_policy_attach_bedrock_execution_role, create_policies_in_oss, interactive_sleep
-import random
 from retrying import retry
 
-suffix = random.randrange(200, 900)
+import secrets
+
+suffix = 200 + secrets.randbelow(700)  # Generates a number between 200 and 899
 
 sts_client = boto3.client('sts')
 boto3_session = boto3.session.Session()
@@ -143,9 +144,7 @@ except RequestError as e:
 
 # Download and prepare dataset
 import os
-os.makedirs('/tmp/data', exist_ok=True)
 
-from urllib.request import urlretrieve
 urls = [
     'https://ws-assets-prod-iad-r-pdx-f3b3f9f1a7d6a3d0.s3.us-west-2.amazonaws.com/c81935bc-0b43-4bd6-bd01-db45f847d6bd/assets/Statistics-WEB.pdf'
 ]
@@ -154,11 +153,18 @@ filenames = [
     'Statistics-WEB.pdf'
 ]
 
-data_root = "/tmp/data/"
+import tempfile
+data_root = tempfile.mkdtemp(prefix="data_")
 
-for idx, url in enumerate(urls):
-    file_path = data_root + filenames[idx]
-    urlretrieve(url, file_path)
+file_path = data_root + filenames[0]
+
+import requests
+
+response = requests.get(urls[0], stream=True, timeout=10)
+response.raise_for_status()  # Raises an HTTPError for bad responses
+with open(file_path, 'wb') as file:
+    for chunk in response.iter_content(chunk_size=8192):
+        file.write(chunk)
 
 
 # Upload data to s3 to the bucket that was configured as a data source to the knowledge base

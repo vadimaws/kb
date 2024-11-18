@@ -1,9 +1,11 @@
 import boto3
-import random
 import time
 import json
 
-suffix = random.randrange(200, 900)
+import secrets
+
+suffix = 200 + secrets.randbelow(700)  # Generates a number between 200 and 899
+
 boto3_session = boto3.session.Session()
 region_name = boto3_session.region_name
 iam_client = boto3_session.client('iam')
